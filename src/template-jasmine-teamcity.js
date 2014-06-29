@@ -18,20 +18,32 @@ var processMixedInTemplate = function (grunt, task, context) {
 		return grunt.util._.template(grunt.file.read(template), mixedInContext);
 	}
 };	
+
+var outputLog = "";	
 	
 exports.process = function(grunt, task, context)
 {
-	var mixedInContext = JSON.parse(JSON.stringify(context));
+	var mixedInContext = JSON.parse(JSON.stringify(context));	
 	task.copyTempFile(tcReporter, 'teamcity-reporter.js');
 	
 	task.phantomjs.on('teamcity', function (coverage) {
-		//grunt.file.write("testeeeee.txt", JSON.stringify(coverage));
+		if(mixedInContext.options.output)
+		{
+			outputLog += coverage + '\n';
+		}
 		grunt.log.writeln(coverage);
 	});
 	
 	task.phantomjs.on('jasmine.jasmineDone', function()
 	{
-		grunt.log.writeln("##teamcity[progressFinish 'Running Jasmine Tests']");
+		var endStr = "##teamcity[progressFinish 'Running Jasmine Tests']";
+		grunt.log.writeln(endStr);
+		
+		if(mixedInContext.options.output)
+		{
+			outputLog += endStr;
+		}
+		grunt.file.write(mixedInContext.options.output, outputLog);
 	});
 	
 	return processMixedInTemplate(grunt, task, context);

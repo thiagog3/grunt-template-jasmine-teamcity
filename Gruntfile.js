@@ -27,7 +27,11 @@ module.exports = function(grunt) {
 			keepRunner: true,
 			specs: 'test/fixtures/teamcityreporter/spec/*Spec.js',
 			host: 'http://127.0.0.1:<%= connect.test.port %>/',
-			template : require('./')
+			template : require('./'),
+			templateOptions :
+			{
+				output: 'output.txt'
+			}
         }
       }
     }

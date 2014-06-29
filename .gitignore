@@ -4,3 +4,6 @@ npm-debug.log
 .idea
 .grunt
 /custom
+/_SpecRunner.html
+
+/output.txt
