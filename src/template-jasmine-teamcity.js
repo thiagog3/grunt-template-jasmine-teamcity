@@ -31,19 +31,20 @@ exports.process = function(grunt, task, context)
 		{
 			outputLog += coverage + '\n';
 		}
-		grunt.log.writeln(coverage);
+		//grunt.log.writeln(coverage);
 	});
 	
 	task.phantomjs.on('jasmine.jasmineDone', function()
 	{
 		var endStr = "##teamcity[progressFinish 'Running Jasmine Tests']";
-		grunt.log.writeln(endStr);
+		//grunt.log.writeln(endStr);
 		
 		if(mixedInContext.options.output)
 		{
 			outputLog += endStr;
 		}
 		grunt.file.write(mixedInContext.options.output, outputLog);
+		//grunt.log.writeln(outputLog);
 	});
 	
 	return processMixedInTemplate(grunt, task, context);

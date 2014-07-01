@@ -17,12 +17,12 @@
 			print("##teamcity[testSuiteStarted name='" + escapeTeamcityString(suite.fullName) + "']");
 		},
 
-		suiteDone : function (suite) {
+		suiteDone : function (suite) {		
 			print("##teamcity[testSuiteFinished name='" + escapeTeamcityString(suite.fullName) + "']");
 		},
 
 		specStarted : function (spec) {
-			print("##teamcity[testStarted name='" + escapeTeamcityString(spec.description) + "' captureStandardOutput='true']");
+			print("##teamcity[testStarted name='" + escapeTeamcityString(spec.description) + "']");
 		},
 
 		specDone : function (result) {
@@ -30,24 +30,7 @@
 			
 			if (result.status == "failed") {
 				report.failureCount++;
-				print("##teamcity[testFailed name='" + escapeTeamcityString(result.description) + "' message='" + escapeTeamcityString(result.status) + "']");
-				var resultItems = result.failedExpectations;
-				var outPut = "";
-				
-				for (var i = 0; i < resultItems.length; i++) {
-					var resultSpec = resultItems[i];
-					
-					outPut = outPut  
-						+ "\nMESSAGE:=" 
-						+ escapeTeamcityString(resultSpec.message) 
-						+ " MATCHER:=" 
-						+ escapeTeamcityString(resultSpec.matcherName) 
-						+ " EXPECTED:=" 
-						+ escapeTeamcityString(resultSpec.expected + "") 
-						+ " ACTUAL:=" 
-						+ escapeTeamcityString(resultSpec.actual + "");
-				}
-				print("##teamcity[testStdErr name='" + escapeTeamcityString(result.description) + "' out='" + outPut + "']");
+				print("##teamcity[testFailed name='" + escapeTeamcityString(result.description) + "' message='" + escapeTeamcityString(result.status) + "' details='"+ escapeTeamcityString(result.failedExpectations[0].stack) +"']");				
 			}
 			print("##teamcity[testFinished name='" + escapeTeamcityString(result.description) + "']");
 		}
@@ -58,7 +41,7 @@
 	};
 
 	function escapeTeamcityString(message) {
-		if (!message || message === undefined || message === null) {
+		if (!message) {
 			return "";
 		}
 

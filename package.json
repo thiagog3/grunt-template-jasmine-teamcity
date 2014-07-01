@@ -1,6 +1,6 @@
 {
   "name": "grunt-template-jasmine-teamcity",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Teamcity Reporter template for grunt-contrib-jasmine",
   "main": "src/template-jasmine-teamcity.js",
   "scripts": {

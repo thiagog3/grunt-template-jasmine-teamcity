@@ -14,6 +14,6 @@ describe('Multiply', function(){
 		expect(multiply(2,10)).toEqual(20);
 	});
 	it('Should multiply two numbers together again', function(){
-		expect(multiply(2,10)).toEqual(22);
+		expect(multiply(2,10)).toEqual(20);
 	});
 });
