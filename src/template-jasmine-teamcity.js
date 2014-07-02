@@ -20,7 +20,7 @@ var processMixedInTemplate = function (grunt, task, context) {
 };	
 
 var outputLog = "";	
-	
+
 exports.process = function(grunt, task, context)
 {
 	var mixedInContext = JSON.parse(JSON.stringify(context));	
@@ -31,20 +31,18 @@ exports.process = function(grunt, task, context)
 		{
 			outputLog += coverage + '\n';
 		}
-		//grunt.log.writeln(coverage);
 	});
 	
 	task.phantomjs.on('jasmine.jasmineDone', function()
 	{
-		var endStr = "##teamcity[progressFinish 'Running Jasmine Tests']";
-		//grunt.log.writeln(endStr);
+		outputLog += "##teamcity[progressFinish 'Running Jasmine Tests']";
 		
 		if(mixedInContext.options.output)
 		{
-			outputLog += endStr;
+			grunt.file.write(mixedInContext.options.output, outputLog);
 		}
-		grunt.file.write(mixedInContext.options.output, outputLog);
-		//grunt.log.writeln(outputLog);
+		
+		grunt.log.writeln(outputLog);
 	});
 	
 	return processMixedInTemplate(grunt, task, context);
