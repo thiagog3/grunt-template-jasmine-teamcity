@@ -42,5 +42,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask('test', ['connect', 'jasmine:teamcityreporter']);
-  grunt.registerTask('default', ['jshint','test']);
+  grunt.registerTask('default', ['test']);
 };
